@@ -33,9 +33,16 @@ static Boat* load_boat_images(Boat *boat) {
                                boat->images->hull_dimensions);
 
     boat->images->sail = load_svg(SAIL_IMAGE_SAIL);
+    boat->images->sail_tight = load_svg(SAIL_IMAGE_SAIL_TIGHT);
     boat->images->sail_dimensions = malloc(sizeof(RsvgDimensionData));
     rsvg_handle_get_dimensions(boat->images->sail,
                                boat->images->sail_dimensions);
+
+    boat->images->sail = load_svg(SAIL_IMAGE_SAIL);
+    boat->images->sail_dimensions = malloc(sizeof(RsvgDimensionData));
+    rsvg_handle_get_dimensions(boat->images->sail,
+                               boat->images->sail_dimensions);
+
 
     boat->images->rudder = load_svg(SAIL_IMAGE_RUDDER);
     boat->images->rudder_dimensions = malloc(sizeof(RsvgDimensionData));

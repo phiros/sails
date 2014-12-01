@@ -160,6 +160,16 @@ static gboolean on_key_press_event(GtkWidget *widget, GdkEvent *ev, SailState *s
             g_message("sail is now blocked");
         }
 
+    } else if (val == GDK_KEY_u) { 
+        state->boat->sheet_length += 0.05;
+        if (state->boat->sheet_length > SHEET_MAX){
+            state->boat->sheet_length = SHEET_MAX;
+        }
+    } else if (val == GDK_KEY_i) {
+        state->boat->sheet_length -= 0.05;
+        if (state->boat->sheet_length < SHEET_MIN){
+            state->boat->sheet_length = SHEET_MIN;
+        }
     } else if (val == GDK_KEY_F11) {
         state->view->is_fullscreen = !state->view->is_fullscreen;
         if (state->view->is_fullscreen) {

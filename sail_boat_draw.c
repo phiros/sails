@@ -24,8 +24,11 @@ static void draw_sail(const Boat *boat, cairo_t *cr) {
     cairo_rotate(cr, -sail_boat_get_sail_angle(boat));
     cairo_translate(cr, -boat->images->sail_dimensions->width/2, -boat->images->sail_dimensions->height/10);
 
-    rsvg_handle_render_cairo(boat->images->sail, cr);
-
+    if (!boat->sail_is_free){
+        rsvg_handle_render_cairo(boat->images->sail, cr);
+    } else {
+        rsvg_handle_render_cairo(boat->images->sail_tight, cr);
+    }
     cairo_restore(cr);
 }
 

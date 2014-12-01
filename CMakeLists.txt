@@ -53,6 +53,7 @@ install(FILES ${RESOURCESDIR}/sails.desktop
 
 install(FILES
         ${RESOURCESDIR}/hull.svg
-        ${RESOURCESDIR}/sail.svg
         ${RESOURCESDIR}/rudder.svg
+        ${RESOURCESDIR}/sail.svg
+        ${RESOURCESDIR}/sail_tight.svg
         DESTINATION ${INSTALLED_RESOURCES})

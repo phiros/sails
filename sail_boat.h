@@ -4,9 +4,13 @@
 #include <cairo.h>
 #include <librsvg/rsvg.h>
 
+#define SHEET_MAX 15
+#define SHEET_MIN 0
+
 typedef struct _images {
     RsvgHandle *hull;
     RsvgHandle *sail;
+    RsvgHandle *sail_tight;
     RsvgHandle *rudder;
     RsvgDimensionData *hull_dimensions;
     RsvgDimensionData *sail_dimensions;

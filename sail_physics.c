@@ -45,13 +45,13 @@ static double force_on_sail(const Boat *boat, const Wind *wind) {
     return boat->sail_lift * apparent_wind_speed(boat, wind) * sin(boat->sail_angle - apparent_wind_direction(boat, wind));
 }
 
-static gboolean sail_is_in_bounds(const Boat *boat) {
+/*static gboolean sail_is_in_bounds(const Boat *boat) {
     if (boat->sheet_length > -M_PI_2 && boat->sheet_length < M_PI_2) {
         return TRUE;
     } else {
         return FALSE;
     }
-}
+}*/
 
 static double delta_x(const Boat *boat, const Wind *wind) {
     return sail_boat_get_velocity(boat) * cos(sail_boat_get_angle(boat)) +
@@ -80,10 +80,10 @@ static double delta_velocity(const Boat *boat, const Wind *wind) {
 }
 
 void sail_physics_update(Boat *boat, const Wind *wind, const double dt) {
-    if (sail_is_in_bounds(boat)) {
+/*    if (sail_is_in_bounds(boat)) {
         boat->sheet_length = boat->sheet_length + dt * boat->sail_is_free;
     }
-
+*/
     if (mainsheet_is_tight(boat, wind)) {
         boat->sail_angle = atan(tan(apparent_wind_direction(boat, wind)));
 
@@ -91,8 +91,12 @@ void sail_physics_update(Boat *boat, const Wind *wind, const double dt) {
         if (!fabs(boat->sail_angle)) {
             boat->sheet_length = fabs(boat->sail_angle);
         }
+
+        boat->sail_is_free = 0;
     } else {
         boat->sail_angle = sign_of(sin(-apparent_wind_direction(boat, wind)))*boat->sheet_length;
+    
+        boat->sail_is_free = 1;
     }
 
     boat->x += delta_x(boat, wind) * dt;
