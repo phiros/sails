@@ -80,6 +80,7 @@ Boat* sail_boat_new() {
 
     new_boat->v = 5;
     new_boat->sheet_length = 0;
+    new_boat->boom_length = 2;
     new_boat->rotational_velocity = 0.0;
     new_boat->inertia = 10000.0;
     new_boat->drift_coefficient = 0.05;

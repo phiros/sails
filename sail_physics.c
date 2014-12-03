@@ -25,12 +25,12 @@ static double apparent_wind_direction(const Boat *boat, const Wind *wind) {
 }
 
 static double apparent_wind_speed(const Boat *boat, const Wind *wind) {
-    return sqrt(pow(apparent_wind_x(boat, wind), 2) + 
+    return sqrt(pow(apparent_wind_x(boat, wind), 2) +
                 pow(apparent_wind_y(boat, wind), 2));
 }
 
 static gboolean mainsheet_is_tight(const Boat *boat, const Wind *wind) {
-    if (cos(apparent_wind_direction(boat, wind)) + cos(boat->sheet_length) < 0) {
+    if (2*boat->boom_length*cos((apparent_wind_direction(boat, wind))/2) > boat->sheet_length) {
         return TRUE;
     } else {
         return FALSE;
@@ -85,17 +85,16 @@ void sail_physics_update(Boat *boat, const Wind *wind, const double dt) {
     }
 */
     if (mainsheet_is_tight(boat, wind)) {
-        boat->sail_angle = atan(tan(apparent_wind_direction(boat, wind)));
 
-        // make sure the sail can change side
-        if (!fabs(boat->sail_angle)) {
-            boat->sheet_length = fabs(boat->sail_angle);
-        }
+        //boat->sail_angle = fmod(apparent_wind_direction(boat, wind)+M_PI,M_PI_2);
+        boat->sail_angle = -1 * sign_of(apparent_wind_direction(boat, wind)) * asin((boat->sheet_length/2)/boat->boom_length)*2;
+        //printf("lololol: %f\n", -1 * sign_of(apparent_wind_direction(boat, wind)) * asin((boat->sheet_length/2)/boat->boom_length)*2);
+
 
         boat->sail_is_free = 0;
     } else {
-        boat->sail_angle = sign_of(sin(-apparent_wind_direction(boat, wind)))*boat->sheet_length;
-    
+        //boat->sail_angle = sign_of(sin(-apparent_wind_direction(boat, wind)))*boat->sheet_length;
+        boat->sail_angle = sail_wind_get_direction(wind) +M_PI - boat->angle;
         boat->sail_is_free = 1;
     }
 
